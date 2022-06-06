@@ -1,12 +1,9 @@
 package com.example.imageskotlin
 
-import android.net.Uri
-import android.net.Uri.*
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.widget.MediaController
 import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.imageskotlin.databinding.ActivityVideoPlayerBinding
 
@@ -19,23 +16,7 @@ class VideoPlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         initViews()
-        getSetItems()
-    }
-
-    private fun getSetItems() {
-        var bundle: Bundle? = intent.extras
-        var path: String? = bundle!!.getString("video_path")
-
-        val mediaController = MediaController(this)
-        mediaController.setAnchorView(videoView)
-        //specify the location of media file
-        val uri: Uri =
-            parse(Environment.getExternalStorageDirectory().getPath() + "/Movies/video.mp4")
-        //Setting MediaController and URI, then starting the videoView
-        videoView.setMediaController(mediaController)
-        videoView.setVideoPath(path)
-        videoView.requestFocus()
-        videoView.start()
+        getSetData()
     }
 
     private fun initViews() {
@@ -44,4 +25,18 @@ class VideoPlayerActivity : AppCompatActivity() {
         videoView = binding.videoView
 
     }
+
+    private fun getSetData() {
+        val bundle: Bundle? = intent.extras
+        val path: String? = bundle!!.getString("video_path")
+
+        val mediaController = MediaController(this)
+        mediaController.setAnchorView(videoView)
+        mediaController.requestFocus()
+        videoView.setMediaController(mediaController)
+        videoView.setVideoPath(path)
+        videoView.requestFocus()
+        videoView.start()
+    }
+
 }
